@@ -1,0 +1,125 @@
+  <ion-header >
+    <ion-toolbar >
+        <div style="width: 100%; margin: 10px;">
+            <ion-segment  [(ngModel)]="valueType">
+                <ion-segment-button *ngIf="clientServices == true" value="Received">
+                  <ion-label>Received</ion-label>
+                </ion-segment-button>
+                <ion-segment-button *ngIf="clientServices == true" value="Sent">
+                  <ion-label>Sent</ion-label>
+                </ion-segment-button>
+                <ion-segment-button *ngIf="riderServices == true" value="Received">
+                    <ion-label>History</ion-label>
+                  </ion-segment-button>
+              </ion-segment>
+        </div>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+    
+    <!-- <ion-segment [(ngModel)]="valueType">
+        <ion-segment-button *ngIf="clientServices == true" value="Received">
+          <ion-label>Received</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="clientServices == true" value="Sent">
+          <ion-label>Sent</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="riderServices == true" value="Received">
+            <ion-label>History</ion-label>
+          </ion-segment-button>
+      </ion-segment> -->
+      
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content 
+        
+        >
+        </ion-refresher-content>
+      </ion-refresher>
+
+      <div [ngSwitch]="valueType" class="">
+        <div *ngSwitchDefault>
+            <ion-skeleton-text *ngIf="isLoading == true"  animated style="width: 100%; height:80px"></ion-skeleton-text>
+           
+            <div *ngIf="clientServices == true">
+                <div *ngIf="isLoading == false">
+                    <app-detail-item *ngFor="let item of client"
+                photo="{{'data:image/jpeg;base64,' + item.image }}"
+                name="{{item.briefDescription}}"
+                transaction="{{ item.rideStatus }}"
+                amount="{{item.price}}"
+                router="/tabs/booking-details"
+                rideId={{item.rideId}}
+                ></app-detail-item>
+                </div>
+            </div>
+            <div *ngIf="riderServices == true">
+                <div *ngIf="isLoading == false">
+                    <app-detail-item *ngFor="let item of rider"
+                photo="{{'data:image/jpeg;base64,' + item.image }}"
+                name="{{item.briefDescription}}"
+                transaction="{{ item.rideStatus }}"
+                amount="{{item.price}}"
+                router="/tabs/booking-details"
+                rideId={{item.rideId}}
+                ></app-detail-item>
+                </div>
+            </div>
+          </div>
+        <div  *ngSwitchCase="'Sent'">
+            <ion-skeleton-text *ngIf="isLoading == true"  animated style="width: 100%; height:80px"></ion-skeleton-text>
+            <div *ngIf="vendorServices == true">
+                <div *ngIf="isLoading == false">
+                    <app-detail-item *ngFor="let item of vendor"
+                    photo="{{'data:image/jpeg;base64,' + item.image }}"
+                    name="{{item.briefDescription}}"
+                    transaction="{{ item.rideStatus }}"
+                    amount="{{item.price}}"
+                    router="/tabs/booking-details"
+                    rideId={{item.rideId}}
+                  ></app-detail-item>
+                </div>
+            </div>
+           
+        </div>
+      </div>
+    <!-- <div>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-skeleton-text  animated style="width: 100%; height:240px"></ion-skeleton-text>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                <ion-skeleton-text  animated style="width: 100%; height:50px"></ion-skeleton-text>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="6">
+                    <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="6">
+                    <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                <ion-skeleton-text  animated style="width: 100%; height:50px"></ion-skeleton-text>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div> -->
+
+
+  
+ 
+</ion-content>

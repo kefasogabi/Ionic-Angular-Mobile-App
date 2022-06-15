@@ -1,0 +1,22 @@
+<ion-item lines="none">
+  <ion-avatar slot="start">
+    <ion-icon class="blue-icon" name="{{ iconName }}"></ion-icon>
+  </ion-avatar>
+  <ion-label>
+    <h2>{{ abbr }}</h2>
+    <p>{{ name }}</p>
+  </ion-label>
+  <ng-container *ngIf="percentage > 0; else elseChip">
+    <ion-chip slot="end" color="success">
+      <ion-label>{{ percentage }} %</ion-label>
+      <ion-icon name="caret-up-outline"></ion-icon>
+    </ion-chip>
+  </ng-container>
+  <ng-template #elseChip>
+    <ion-chip slot="end" color="danger">
+      <ion-label>{{ percentage }} %</ion-label>
+      <ion-icon name="caret-down-outline"></ion-icon>
+    </ion-chip>
+  </ng-template>
+  
+</ion-item>

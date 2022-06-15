@@ -1,0 +1,6 @@
+<ion-card (click)="setActive()">
+  <ion-avatar>
+    <img src="{{ photo }}" [ngClass]="{'active': active}"/>
+  </ion-avatar>
+  <ion-label [ngClass]="{'active': active}">{{ name }}</ion-label>
+</ion-card>

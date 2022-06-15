@@ -1,0 +1,37 @@
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <div class="container">
+   
+    <div class="header" >
+      <h1>Welcome to RoadSter</h1>
+      <ion-img src="assets/icon/motorcycle.svg" ></ion-img>
+    </div>
+    
+   
+   <div class="form">
+    <app-starter-card class="card"
+    [cardColor]="card.cardColor"
+    [text]="card.text"
+    ></app-starter-card>
+
+     <div>
+       <ion-button expand="block"  [routerLink]="['/login']">
+         <div class="btn-container">
+           <span>Sign In with phone number</span>
+         </div>
+       </ion-button>
+     </div>
+     <div>
+      <ion-button expand="block" fill="outline" [routerLink]="['/tabs/home']">
+        <div class="btn-container">
+          <span>Sign Up with phone number</span>
+        </div>
+      </ion-button>
+    </div>
+   </div>
+ 
+  </div>
+   
+ </ion-content>
+ 

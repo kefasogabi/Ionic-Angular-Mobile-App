@@ -1,0 +1,40 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="ion-padding background">
+   
+  <div class="title">
+    <h1>Recover Your PIN</h1>
+  </div>
+
+  <div class="container">
+
+    <div class="form">
+      <div>
+        <ion-item>
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          <ion-input type="email" inputmode="tel" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+          <ion-input type="number" inputmode="tel" placeholder="Phone Number"></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-button [routerLink]="[ '/tabs/home' ]" expand="block">
+        <div class="btn-container">
+          <span>Reset</span>
+          <ion-icon name="paper-plane"></ion-icon>
+        </div>
+      </ion-button>
+
+    </div>
+  </div>
+</ion-content>

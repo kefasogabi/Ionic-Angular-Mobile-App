@@ -1,0 +1,41 @@
+<ion-card class="{{ cardColor }}">
+  <ion-card-header>
+    <img [src]="'assets/cards/' + type + '.png'" />
+    <ion-button fill="clear" size="small" shape="round" color="medium" (click)="isOpen = !isOpen">
+      <ng-container *ngIf="!isOpen; else elseTemplate">
+        <ion-icon  slot="icon-only" name="chevron-down-outline"></ion-icon>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <ion-icon  slot="icon-only" name="chevron-up-outline"></ion-icon>
+      </ng-template>
+    </ion-button>
+  </ion-card-header>
+  <ion-card-content (click)="gotoCard(idx)">
+    <ion-text class="{{ numberColor }}">{{ number }}</ion-text>
+    <div class="data">
+      <ul>
+        <li><span>Card Holder</span></li>
+        <li>
+          <p>{{ owner }}</p>
+        </li>
+      </ul>
+      <ul>
+        <li><span>Expires</span></li>
+        <li>
+          <p>{{ expires }}</p>
+        </li>
+      </ul>
+    </div>
+    <ion-buttons class="cta-buttons" *ngIf="isOpen">
+      <ion-button expand="block" class="{{ numberColor }}" shape="round">
+        <ion-icon name="cash-outline"></ion-icon>
+        Pay</ion-button>
+      <ion-button expand="block" class="{{ numberColor }}" shape="round">
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+        Transfer</ion-button>
+      <ion-button expand="block" class="{{ numberColor }}" shape="round">
+        <ion-icon name="create-outline"></ion-icon>
+        Edit</ion-button>
+    </ion-buttons>
+  </ion-card-content>
+</ion-card>

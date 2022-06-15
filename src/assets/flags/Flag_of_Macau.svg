@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" viewBox="-1440 -960 2880 1920">
+  <defs>
+    <clipPath id="a">
+      <path d="M-1440-960H0V960h-1440z"/>
+    </clipPath>
+    <clipPath id="b">
+      <path d="M-224 0H0v400h-224z"/>
+    </clipPath>
+    <clipPath id="c">
+      <circle cy="-38" r="576"/>
+    </clipPath>
+    <clipPath id="f">
+      <circle cx="-182" cy="-96" r="324.5"/>
+    </clipPath>
+    <clipPath id="e">
+      <circle cx="-213" cy="-91" r="324.5"/>
+    </clipPath>
+    <clipPath id="d">
+      <circle cx="-234" cy="-64" r="324.5"/>
+    </clipPath>
+    <g id="s">
+      <g id="B">
+        <path id="A" d="M0 0v1h.5z" fill="#ffde23" transform="translate(0-1) rotate(18)"/>
+        <use xlink:href="#A" transform="scale(-1 1)"/>
+      </g>
+      <g id="C">
+        <use xlink:href="#B" transform="rotate(72)"/>
+        <use xlink:href="#B" transform="rotate(216)"/>
+      </g>
+      <use xlink:href="#C" transform="rotate(72)"/>
+    </g>
+  </defs>
+  <path d="M-1440-960h2880V960h-2880z" fill="#0f7562"/>
+  <g id="h" clip-path="url(#a)">
+    <circle cx="-209" cy="-7" r="324.5" fill="#fff" clip-path="url(#b)"/>
+    <circle cx="-224" cy="-39" r="324.5" fill="#0f7562"/>
+    <g clip-path="url(#c)" fill="#fff">
+      <path d="M-500 285.5h291v32h-291zm0 65H0v16h-500zm0 49H0v25h-500zm0 50H0v32h-500zm0 48H0v50h-500z"/>
+    </g>
+    <circle cx="158" cy="-149" r="324.5" fill="#fff"/>
+    <circle cx="199" cy="-118" r="324.5" fill="#0f7562"/>
+    <circle cy="-346" r="130" fill="#0f7562"/>
+    <circle cx="212" cy="-100" r="324.5" fill="#fff"/>
+    <circle cx="-379" cy="307" r="381.5" clip-path="url(#d)" fill="#fff"/>
+    <circle cx="-370" cy="343" r="381.5" clip-path="url(#e)" fill="#0f7562"/>
+    <circle cx="-485" cy="21" r="130" fill="#0f7562"/>
+    <g clip-path="url(#d)" fill="#fff">
+      <circle cx="-339" cy="372" r="381.5" clip-path="url(#f)"/>
+      <path d="M-100 50l60 50H0v100h-50z"/>
+    </g>
+    <use xlink:href="#s" transform="translate(0-492.5) scale(105.5)"/>
+    <use xlink:href="#s" transform="rotate(-35 0-38) translate(0-492.5) scale(73)"/>
+    <use xlink:href="#s" transform="rotate(-65 0-38) translate(0-492.5) scale(73)"/>
+  </g>
+  <use xlink:href="#h" transform="scale(-1 1)"/>
+</svg>

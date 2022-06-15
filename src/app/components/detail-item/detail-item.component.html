@@ -1,0 +1,19 @@
+<ion-item  (click)="routerLink(router, rideId)" lines="none">
+  <ion-avatar slot="start">
+    <ng-container *ngIf="photo; else elseTemplate">
+      <img  src="{{ photo }}">
+    </ng-container>
+    <ng-template #elseTemplate>
+      <ion-icon class="blue-icon" name="car-sport-outline"></ion-icon>
+    </ng-template>
+  </ion-avatar>
+  <ion-label>
+    <h2>{{ name }}</h2>
+    <p>{{ transaction }}</p>
+  </ion-label>
+  <ion-label class="amount">
+    <ng-container >
+      <h2 class="green-icon">{{ amount }}</h2>
+    </ng-container>
+  </ion-label>
+</ion-item>

@@ -1,0 +1,59 @@
+
+
+<ion-content [fullscreen]="true"  class="ion-padding ">
+
+  <div class="container">
+
+    <div fxlayout="row" id="header" fxShow fxHide.lg="true" class="title">
+      <h5 style="color:#002366">What will you like to do?</h5> 
+    </div>
+
+<div class="gradient-background">
+  <ion-card style="border: 0.5px solid #002366">
+    <ion-card-content  >
+      <ion-list >
+        <ion-item style=" background:gainsboro" (click)="client()" >
+          <ion-avatar slot="start">
+            <ng-container >
+              <img src="assets/icon/download.svg">
+            </ng-container>
+          </ion-avatar>
+          <ion-label>
+            <h2>Send and Receive</h2>
+            <p>I want to use this app to send and receive goods or packages</p>
+          </ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item  (click)="rider()">
+          <ion-avatar slot="start">
+            <ng-container >
+              <img src="assets/icon/motorcycle.svg">
+            </ng-container>
+          </ion-avatar>
+          <ion-label>
+            <h2>Riders or Drivers</h2>
+            <p>I want to register as a dispatch rider.</p>
+          </ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item lines="none" (click)="organization()">
+          <ion-avatar slot="start">
+            <ng-container >
+              <img src="assets/icon/business.svg">
+            </ng-container>
+          </ion-avatar>
+          <ion-label>
+            <h2>Logistic Company</h2>
+            <p>I want to use this app to manage my organization's fleet of dispatch riders.</p>
+          </ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</div>
+  </div>
+</ion-content>
+
+
+

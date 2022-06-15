@@ -1,0 +1,146 @@
+<ion-header class="ion-no-border">
+
+  <ion-toolbar side="start">
+    <ion-row class="ion-no-border">
+      <ion-buttons class="hidden-sm-down" side="start">
+        <ion-menu-toggle>
+          <ion-button autoHide="false">
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
+      <ion-col>
+        <h1>
+          My Services
+        </h1>
+        <ion-text>John Doe</ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToNotifications()">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- fab placed to the bottom and start and on the bottom edge of the content overlapping footer with a list to the right -->
+  <ion-fab vertical="top" horizontal="end" slot="fixed" title="Add a service" size="small">
+    <ion-fab-button>
+      <ion-icon name="Add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button>
+        <ion-icon name="download-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="paper-plane-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="business-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-card>
+      <ion-row class="heading">
+        <ion-col>Header 1</ion-col>
+        <ion-col>Header 2</ion-col>
+        <ion-col>Header 3</ion-col>
+        <ion-col>Header 4</ion-col>
+        <ion-col>Header 5</ion-col>
+      </ion-row>
+    </ion-card>
+
+    <ion-row class="body">
+      <ion-col>
+        <div>
+          1 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          2 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          3 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          4 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          5 of 5
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="body">
+      <ion-col>
+        <div>
+          1 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          2 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          3 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          4 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          5 of 5
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="body">
+      <ion-col>
+        <div>
+          1 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          2 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          3 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          4 of 5
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          5 of 5
+        </div>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+
+</ion-content>

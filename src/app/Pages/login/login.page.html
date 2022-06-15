@@ -1,0 +1,74 @@
+
+<ion-content [fullscreen]="true" class="ion-padding background">
+  <div class="container ">
+   
+    <div fxlayout="row" id="header" fxShow fxHide.lg="true" class="title">
+      <h2>Raven App</h2> 
+    </div>
+   
+          <div class="form">
+                <h3>Login to your account</h3>
+            <form #f="ngForm" [formGroup]="LoginForm" (ngSubmit) = "login()">
+              <ion-row>
+                <ion-col size="5">
+                  <ion-item>
+                    <ion-select (click)="loadFlags()" formControlName="countryId" placeholder="Country">
+                      <ion-select-option *ngFor="let c of countries" value="{{c.dialingCode}}"> +{{c.dialingCode}} </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.countryId"> 
+                      <div class="error-message" *ngIf="LoginForm.get('countryId').hasError(error.type) && (LoginForm.get('countryId').dirty || LoginForm.get('countryId').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                </ion-col>
+                <ion-col size="7">
+                  <ion-item [formGroup]="LoginForm">
+                    <ion-icon slot="start" name="call-outline"></ion-icon>
+                    <ion-input type="text"  minlength="10" maxlength="15" appIntegerInput (keyup)="noZero($event)" required formControlName="phone" inputmode="tel"  placeholder="Telephone"></ion-input>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.phone"> 
+                      <div class="error-message" *ngIf="LoginForm.get('phone').hasError(error.type) && (LoginForm.get('phone').dirty || LoginForm.get('phone').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                </ion-col>
+              </ion-row>
+             
+        
+              <ion-item [formGroup]="LoginForm">
+                <ion-icon slot="start" name="key-outline"></ion-icon>
+                <ion-input type="password" inputmode="tel" appIntegerInput  formControlName="password" placeholder="Pin (0000)" required minlength="4" maxlength="4"></ion-input>
+              </ion-item>
+        
+              <div class="error-messages">
+                <ng-container *ngFor="let error of error_messages.password">
+                  <div class="error-message" *ngIf="LoginForm.get('password').hasError(error.type) && (LoginForm.get('password').dirty || LoginForm.get('password').touched)">
+                    {{ error.message }}
+                  </div>
+                </ng-container>
+              </div>
+                
+                <ion-button type="submit" expand="block">
+                  <div class="btn-container">
+                    <span>Sign In</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </div>
+                </ion-button>
+        
+            </form>
+            <div class="ion-text-center">
+              <span><a [routerLink]="[ '/signup' ]"> Don’t have an account? Sign Up</a></span>
+            </div>
+            <div class="ion-text-center">
+              <span><a [routerLink]="[ '/recoverpin' ]">Forgot Password?</a></span>
+            </div>
+        </div>
+     
+  </div>
+  </ion-content>
+  

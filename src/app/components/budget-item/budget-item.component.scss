@@ -1,0 +1,103 @@
+ion-card {
+    box-shadow: none;
+    --background: #ffffff;
+    border-radius: 6pt;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+  
+  ion-progress-bar {
+      padding: .3rem;
+      border-radius: 6pt;
+      margin: .2rem 0;
+  }
+  
+  .item-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  
+    ul {
+      list-style: none;
+      padding-inline-start: 0px;
+      margin-top: 0;
+      margin-bottom: .2rem;
+      line-height: 20pt;
+    }
+  
+    ul li span {
+      color: #000000;
+      opacity: 0.5;
+    }
+  
+    ul li p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  
+    .right {
+      text-align: right;
+  
+      p {
+        font-size: 14pt;
+        color: #000000;
+        font-weight: 500;
+        opacity: 0.7;
+      }
+    }
+  
+    .left {
+      text-align: left;
+  
+      p {
+        font-size: 16pt;
+        color: #000000;
+        font-weight: 700;
+        opacity: 0.85;
+      }
+    }
+  }
+  
+  ion-card-content {
+    padding-top: .5rem;
+  
+    ion-item {
+      --background: #ffffff;
+      --inner-padding-start: 0;
+      --inner-padding-end: 0;
+      
+      p {
+        margin-top: .4rem;
+        font-size: 11pt;
+        color: #000000;
+        opacity: 0.7;
+      }
+    }
+  
+    ion-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center; 
+      background: #E3EDFF;
+      margin: 0 1rem 0 0;
+    
+      ion-icon {
+        font-size: 18pt;
+      }
+    }
+  }
+
+  @media (max-device-height: 640px),
+handheld and (orientation: portrait) {
+  .right {
+    p {
+      font-size: 12pt !important;
+    }
+  }
+
+  .left {
+    p {
+      font-size: 14pt !important;
+    }
+  }
+}

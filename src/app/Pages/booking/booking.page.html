@@ -1,0 +1,322 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="container ">
+          <div class="form">
+                <form  [formGroup]="bookForm" (ngSubmit)="submit()">
+                  <div formGroupName="PackageDetails" *ngIf="step == 1">
+                    <h3 id="header">What would you like to send?</h3>
+                    
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="typeOfContent" placeholder="Type of content">
+                        <ion-select-option *ngFor="let g of contentType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.typeOfContent"> 
+                        <div class="error-message" *ngIf="bookForm.get('PackageDetails.typeOfContent').hasError(error.type) && (bookForm.get('PackageDetails.typeOfContent').dirty || bookForm.get('PackageDetails.typeOfContent').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+                      <ion-textarea type="text" formControlName="briefDescription" inputmode="text" placeholder="Quantity and Package Description" required ></ion-textarea>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.briefDescription"> 
+                        <div class="error-message" *ngIf="bookForm.get('PackageDetails.briefDescription').hasError(error.type) && (bookForm.get('PackageDetails.briefDescription').dirty || bookForm.get('PackageDetails.briefDescription').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col >
+                          <app-image-picker
+                            [selectedImage]="bookForm.get('PackageDetails.imagePreview').value"
+                            (imagePick)="onImagePicked($event)"
+                          ></app-image-picker>
+                      </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                      <ion-row >
+                        <ion-col size="">
+                           <ion-button expand="block" color="primary" [disabled]="!bookForm.get('PackageDetails').valid"
+                           (click)="next()" size="small">Next</ion-button>
+                        </ion-col>
+                      </ion-row>
+                  </div>
+                  <div formGroupName="pickupDetails" *ngIf="step == 2">
+                    <h3>Pickup Details</h3>
+                    <!-- <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="pickupType" placeholder="Pickup Type">
+                        <ion-select-option *ngFor="let g of pickupType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.pickupType"> 
+                        <div class="error-message" *ngIf="bookForm.get('pickupDetails.pickupType').hasError(error.type) && (bookForm.get('pickupDetails.pickupType').dirty || bookForm.get('pickupDetails.pickupType').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div> -->
+                    <ion-item >
+                      <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+                      <ion-datetime formControlName="pickupDateTime" [min]="fromDate" displayFormat="D MMM YYYY H:mm " placeholder="Pickup Date and Time" required ></ion-datetime>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.pickupDateTime"> 
+                        <div class="error-message" *ngIf="bookForm.get('pickupDetails.pickupDateTime').hasError(error.type) && (bookForm.get('pickupDetails.pickupDateTime').dirty || bookForm.get('pickupDetails.pickupDateTime').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="">
+                          <app-location-picker
+                            [showPreview]="bookForm.get('pickupDetails.pickupAddressImage').value"
+                            (locationPick)="onPickUpPicked($event)"
+                            [title]="'Select Pick-up Location'"
+                          ></app-location-picker>
+                          <p>{{bookForm.get('pickupDetails.pickupAddress').value}}</p>
+                      </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                    <ion-grid>
+                      <ion-row >
+                        <ion-col  size="6">
+                          <ion-button expand="block"  (click)="previous()" color="success" size="small">Previous</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                           <ion-button expand="block" color="primary" [disabled]="!bookForm.get('pickupDetails').valid"  (click)="next()" size="small">Next</ion-button>
+                          </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                  <div formGroupName="dropoffDetails" *ngIf="step == 3">
+                    <h3>Dropoff Details</h3>
+                    <ion-row>
+                      <ion-col size="3">
+                        <ion-item >
+                          <ion-input type="text"  formControlName="countryId" ></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col size="9">
+                        <ion-item >
+                          <ion-input type="text" minlength="5" (keyup)="getClient()"  maxlength="15" appIntegerInput  (keyup)="noZero($event)" formControlName="phone" inputmode="tel"  placeholder="Recipient Telephone"></ion-input>
+                        </ion-item>
+                        <div class="error-messages">
+                          <ng-container *ngFor="let error of error_messages.phone"> 
+                            <div class="error-message" *ngIf="bookForm.get('dropoffDetails.phone').hasError(error.type) && (bookForm.get('dropoffDetails.phone').dirty || bookForm.get('dropoffDetails.phone').touched)">
+                              {{ error.message }}
+                            </div>
+                          </ng-container>
+                        </div>
+                      </ion-col>
+                      <!-- <ion-col size="2">
+                          <ion-button expand="full" color="light" size="small"> <ion-icon  size="large" name="search-outline"></ion-icon></ion-button>
+                      </ion-col> -->
+                    </ion-row>
+                    <ion-input type="text" *ngIf="client"  formControlName="fullname" ></ion-input>
+                    <ion-item >
+                      <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+                      <ion-datetime formControlName="dropoffDateTime" [min]="toDate" displayFormat="D MMM YYYY H:mm " placeholder="Dropoff Date and Time" required ></ion-datetime>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.dropoffDateTime"> 
+                        <div class="error-message" *ngIf="bookForm.get('dropoffDetails.dropoffDateTime').hasError(error.type) && (bookForm.get('dropoffDetails.dropoffDateTime').dirty || bookForm.get('dropoffDetails.dropoffDateTime').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col >
+                          <app-location-picker
+                            [showPreview]="bookForm.get('dropoffDetails.dropoffAddressImage').value"
+                            (locationPick)="onDropOffPicked($event)"
+                            [title]="'Select Drop-off Location'"
+                          ></app-location-picker>
+                          <p>{{bookForm.get('dropoffDetails.dropoffAddress').value}}</p>
+                      </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.pickupAddress"> 
+                        <div class="error-message" *ngIf="bookForm.get('dropoffDetails.dropoffAddress').hasError(error.type) && (bookForm.get('dropoffDetails.dropoffAddress').dirty || bookForm.get('dropoffDetails.dropoffAddress').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-grid>
+                      <ion-row >
+                        <ion-col   size="6">
+                          <ion-button expand="block"  (click)="previous()" color="success" size="small">Previous</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                           <ion-button expand="block" color="primary" [disabled]="!bookForm.get('dropoffDetails').valid"  (click)="next()" size="small">Next</ion-button>
+                          </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                  <div formGroupName="paymentDetails" *ngIf="step == 4">
+                    <h3>Payment Details</h3>
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="typeOfRide" placeholder="Type of ride">
+                        <ion-select-option *ngFor="let g of typeOfRides" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.typeOfRide"> 
+                        <div class="error-message" *ngIf="bookForm.get('paymentDetails.typeOfRide').hasError(error.type) && (bookForm.get('paymentDetails.typeOfRide').dirty || bookForm.get('paymentDetails.typeOfRide').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select (ionChange)="checkBalance($event, wallet)" formControlName="price" placeholder="Select price">
+                        <ion-select-option *ngFor="let g of estimates" value="{{g.price}}">{{g.pickupType}} {{g.currency}}{{g.price}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.price"> 
+                        <div class="error-message" *ngIf="bookForm.get('paymentDetails.price').hasError(error.type) && (bookForm.get('paymentDetails.price').dirty || bookForm.get('paymentDetails.price').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <div *ngIf="showWallet == true" style="background: #E3EDFF; border-radius: 10px;">
+                      <ion-grid>
+                        <ion-row>
+                          <p>You have insufficient fund to perform this transaction.</p>
+                        </ion-row>
+                        <h3 style="margin: 0px; padding: 0px; font-weight: bold; color: #002366;">Wallet Balance: {{wallet.balance}}</h3>
+                        <ion-button expand="block" (click)="fund()" color="success" size="small">Fund wallet</ion-button>
+                        </ion-grid>
+                    </div>
+
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="payer" placeholder="Select Payer">
+                        <ion-select-option *ngFor="let g of payers" value="{{g.id}}">{{g.name}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.payer"> 
+                        <div class="error-message" *ngIf="bookForm.get('paymentDetails.payer').hasError(error.type) && (bookForm.get('paymentDetails.payer').dirty || bookForm.get('paymentDetails.payer').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="paymentType" placeholder="Select Payment Type">
+                        <ion-select-option *ngFor="let g of paymentTypes" value="{{g.id}}">{{g.name}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.paymentType"> 
+                        <div class="error-message" *ngIf="bookForm.get('paymentDetails.paymentType').hasError(error.type) && (bookForm.get('paymentDetails.paymentType').dirty || bookForm.get('paymentDetails.paymentType').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                   
+                    <ion-grid>
+                      <ion-row >
+                        <ion-col  size="6">
+                          <ion-button expand="block"  (click)="previous()" color="success" size="small">Previous</ion-button>
+                        </ion-col>
+                        <ion-col size="6"> 
+                          <ion-button  expand="block" [disabled]="!bookForm.get('paymentDetails').valid" color="primary" (click)="next()" size="small">Preview</ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                  <div *ngIf="step == 5">
+                    <h3>Preview</h3>
+                    <ion-item-divider class="head1">
+                      <ion-label>
+                        Package Details
+                      </ion-label>
+                    </ion-item-divider>
+                    <ion-img  class="image" src="{{bookForm.get('PackageDetails.imagePreview').value}}"></ion-img>
+                    <p>{{bookForm.get('PackageDetails.briefDescription').value}}</p>
+                    <p>{{bookForm.get('PackageDetails.typeOfContent').value}}</p>
+                    <br><br>
+                    <ion-item-divider class="head2">
+                      <ion-label>
+                        Pickup Details
+                      </ion-label>
+                    </ion-item-divider>
+                    <p>{{bookForm.get('pickupDetails.pickupDateTime').value | date:'MMM d, y h:mm:ss a'}}</p>
+                    <ion-img  class="image" src="{{bookForm.get('pickupDetails.pickupAddressImage').value}}"></ion-img>
+                    <p>{{bookForm.get('pickupDetails.pickupAddress').value}}</p>
+                    <br><br>
+                    <ion-item-divider class="head3">
+                      <ion-label>
+                        Dropoff Details
+                      </ion-label>
+                    </ion-item-divider>
+                    <p>{{bookForm.get('dropoffDetails.fullname').value}}</p>
+                    <p>{{Phone}}</p>
+                    <p>{{bookForm.get('dropoffDetails.dropoffDateTime').value | date:'MMM d, y h:mm:ss a'}}</p>
+                    <ion-img  class="image" src="{{bookForm.get('dropoffDetails.dropoffAddressImage').value}}"></ion-img>
+                    <p>{{bookForm.get('dropoffDetails.dropoffAddress').value}}</p>
+                    <br><br>
+                    <ion-item-divider class="head4">
+                      <ion-label>
+                        Payment Details
+                      </ion-label>
+                    </ion-item-divider>
+                    <p>{{bookForm.get('paymentDetails.typeOfRide').value}}</p>
+                    <p>{{bookForm.get('paymentDetails.price').value}}</p>
+                    <p>{{bookForm.get('paymentDetails.payer').value}}</p>
+                    <p>{{bookForm.get('paymentDetails.paymentType').value}}</p>
+
+                    <ion-grid>
+                      <ion-row >
+                        <ion-col  size="">
+                          <ion-button (click)="submit()" expand="block" color="success" size="small">Book</ion-button>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row >
+                        <ion-col size=""> 
+                        <!-- <ion-button type="submit"  expand="block" color="secondary" size="small">Find a Reaven Rider</ion-button> -->
+                      </ion-col>
+                        <ion-col size=""> 
+                          <div (click)="previous()" class="ion-text-center">
+                            <span><a> Back to form </a></span>
+                          </div>
+                        </ion-col>
+                        <ion-col size=""> 
+                          <!-- <ion-button type="submit"  expand="block" color="secondary" size="small">Find a Reaven Rider</ion-button> -->
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                 </form>
+        <!-- </ion-card-content>
+       
+          </ion-card> -->
+          </div>
+  </div>
+  
+</ion-content>
+          

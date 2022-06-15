@@ -1,0 +1,263 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="{{authService.route}}">Back</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div *ngIf="isLoading == true">
+    <ion-grid>
+      <ion-row>
+          <ion-col>
+              <ion-skeleton-text  animated style="width: 100%; height:240px"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+          <ion-skeleton-text  animated style="width: 100%; height:50px"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col size="6">
+              <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+          </ion-col>
+          <ion-col size="6">
+              <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col size="6">
+              <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+          </ion-col>
+          <ion-col size="6">
+              <ion-skeleton-text  animated style="width: 100%; height:80px"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+          <ion-skeleton-text  animated style="width: 100%; height:50px"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</div>
+ 
+  <div *ngIf="isLoading == false">
+    <ion-card   class="transaction-container">
+      
+      <ion-grid >
+        <ion-row class="transaction-row1">
+          <ion-col size="8"> <h1>Ride ID {{booking.rideId}}</h1></ion-col>
+          <ion-col *ngIf="booking.rideStatus == 'IN_TRANSIT'" size="4">
+            <ion-button (click)="track(booking.rideId)" expand="block" color="success" size="small">Track</ion-button>
+          </ion-col>
+        </ion-row >
+      </ion-grid>
+      <ion-item-divider class="head1">
+        <ion-label>
+          Package Details
+        </ion-label>
+      </ion-item-divider>
+      <ion-grid >
+        <ion-row class="transaction-row1">
+            <ion-img src="{{booking.image ? 'data:image/jpeg;base64,' + booking.image : 'assets/noImage.jpg' }}"   ></ion-img>
+        </ion-row >
+        <ion-row class="transaction-row2">
+          <ion-col size="8" class="transaction-row2-col1" >
+            <h1>Description</h1> 
+            <p>{{booking.briefDescription}}
+          </ion-col>
+          <ion-col  size="4" class="transaction-row2-col2">
+            <h1>Content Type</h1>
+            <p>{{booking.typeOfContent}}</p>
+          </ion-col>
+        </ion-row >
+        <ion-row class="transaction-row2">
+          <ion-col size="6" class="transaction-row2-col1" >
+            <h1>Status</h1> 
+            <p>{{booking.rideStatus}}
+          </ion-col>
+          <ion-col  size="6" class="transaction-row2-col2">
+            <h1>Price </h1>
+            <p>{{booking.price}}</p>
+          </ion-col>
+        </ion-row >
+      </ion-grid>
+    <div >
+      <ion-card-content  class="ion-no-padding wrapper">
+
+        <ion-item-divider class="head2">
+          <ion-label>
+            Pickup Details
+          </ion-label>
+        </ion-item-divider>
+        <ion-grid>
+          <ion-row class="transaction-row2">
+            <ion-col class="transaction-row2-col1">
+              <h1>Pickup Type</h1> 
+              <p>{{booking.pickupType}}</p>
+            </ion-col>
+            <ion-col class="transaction-row2-col2">
+              <h1>Pickup Time</h1> 
+              <p>{{booking.pickupDateTime | date:'MMM d, y h:mm a'}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row class="transaction-row2">
+            <ion-col class="transaction-row2-col1">
+              <h1>Pickup Address</h1> 
+              <p>{{booking.pickupAddress}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row class="transaction-row2">
+            <ion-col class="transaction-row2-col1">
+              <h1>Sender name</h1> 
+              <p>{{booking.vendorName}}</p>
+            </ion-col>
+            <ion-col class="transaction-row2-col2">
+              <h1>Telephone </h1> 
+              <p>{{booking.vendorTelephone}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-item-divider class="head3">
+          <ion-label>
+            Dropoff Details
+          </ion-label>
+        </ion-item-divider>
+        <ion-grid>
+          <ion-row class="transaction-row2">
+            <ion-col class="transaction-row2-col1">
+              <h1>Dropoff Address</h1> 
+              <p>{{booking.dropoffAddress}}</p>
+            </ion-col>
+            <ion-col class="transaction-row2-col2">
+              <h1>Dropoff Time</h1> 
+              <p>{{booking.dropoffDateTime | date:'MMM d, y h:mm a'}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row class="transaction-row2">
+            <ion-col class="transaction-row2-col1">
+              <h1>Receiver name</h1> 
+              <p>{{booking.vendorName}}</p>
+            </ion-col>
+            <ion-col class="transaction-row2-col2">
+              <h1>Telephone </h1> 
+              <p>{{booking.clientTelephone}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-item-divider class="head4">
+          <ion-label>
+            Payment Details
+          </ion-label>
+        </ion-item-divider>
+          <ion-grid>
+            <ion-row class="transaction-row2">
+              <ion-col class="transaction-row2-col1">
+                <h1>Type of Vehicle</h1> 
+                <p>{{booking.typeOfRide}}</p>
+              </ion-col>
+              <ion-col class="transaction-row2-col2">
+                <h1>Payment Type</h1> 
+                <p>{{booking.paymentType}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="transaction-row2">
+              <ion-col class="transaction-row2-col1">
+                <h1>Payer</h1> 
+                <p>{{booking.payer}}</p>
+              </ion-col>
+              <ion-col class="transaction-row2-col2">
+                <h1>Payment Status</h1> 
+                <p>{{booking.paymentStatus}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-item-divider class="head5">
+            <ion-label>
+              Rider Details
+            </ion-label>
+          </ion-item-divider>
+            <ion-grid>
+              <ion-row class="transaction-row2">
+                <ion-col class="transaction-row2-col1">
+                  <h1>Rider's name</h1> 
+                  <p>{{booking.riderName}} </p>
+                </ion-col>
+                <ion-col class="transaction-row2-col2">
+                  <h1>Telephone</h1> 
+                  <p>{{booking.riderTelephone}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          <div *ngIf="vendorServices == true">
+            <div *ngIf="vendorId == booking.vendorId">
+              <ion-grid>
+                <ion-row *ngIf="booking.rideStatus == 'IN_TRANSIT'" >
+                  <ion-col size=""> 
+                    <ion-button (click)="activateCompletion()" expand="block" color="primary" size="small">Delivered</ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="booking.rideStatus == 'BOOKING' || booking.rideStatus == 'BOOKED'" >
+                  <ion-col  size=""> 
+                    <ion-button (click)="cancelRide()" expand="block" color="danger" size="small">Cancel</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+
+          <div *ngIf="clientServices == true">
+            <div *ngIf="vendorId != booking.vendorId">
+              <ion-grid>
+                <ion-row *ngIf="booking.rideStatus == 'IN_TRANSIT'" >
+                  <ion-col size=""> 
+                    <ion-button (click)="activateCompletion()"  expand="block" color="primary" size="small">Delivered</ion-button>
+                  </ion-col>
+                </ion-row>
+                <!-- <ion-row *ngIf="booking.rideStatus == 'BOOKING' || booking.rideStatus == 'BOOKED'">
+                  <ion-col size=""> 
+                    <ion-button (click)="cancelRide()" expand="block" color="danger" size="small">Cancel</ion-button>
+                  </ion-col>
+                </ion-row> -->
+              </ion-grid>
+            </div>
+          </div>
+         
+          <div *ngIf="riderServices == true">
+            <ion-grid>
+              <ion-row *ngIf="booking.rideStatus == 'BOOKING'">
+                <ion-col size="6"> 
+                  <ion-button (click)="acceptRide()" expand="block" color="secondary" size="small">ACCEPT</ion-button>
+                </ion-col>
+                <ion-col size="6"> 
+                  <ion-button (click)="cancelRide()"  expand="block" color="danger" size="small">REJECT</ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row  *ngIf="booking.rideStatus == 'BOOKED'" >
+                <ion-col size=""> 
+                  <ion-button (click)="activatePickup()" expand="block" color="secondary" size="small">PICKUP</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+         <!-- <div *ngIf="clientServices == true" >
+           <h1 style="text-align: center;" >Rate the rider</h1>
+           <star-rating [(rating)]="rating" (click)="rateRider(rating)" ></star-rating>
+         </div>
+         <div *ngIf="riderServices == true" >
+          <h1 style="text-align: center;" >Rate the client</h1>
+          <star-rating [(rating)]="rating" (click)="rateClient(rating)" ></star-rating>
+        </div> -->
+          
+      </ion-card-content>
+    </div>
+    </ion-card>
+  </div>
+
+
+
+</ion-content>

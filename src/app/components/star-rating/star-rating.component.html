@@ -1,0 +1,8 @@
+
+<div style="justify-content: center;
+text-align: center; padding-top: 10px; padding-bottom: 10px;">
+  <ion-icon name="star"
+    *ngFor="let num of [1,2,3,4,5]" (click)="rate(num)" [ngStyle]="{'fill' : getColor(num)}">
+
+  </ion-icon>
+</div> 

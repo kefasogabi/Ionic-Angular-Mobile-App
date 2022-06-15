@@ -1,0 +1,26 @@
+ <ion-header>
+  <ion-toolbar> 
+    <div id="pac-container">
+      <input id="pac-input" type="text" placeholder="Enter a location" />
+    </div>
+    <!-- <ion-title>{{ title }}</ion-title>
+    <ion-searchbar  placeholder="Search for a place"></ion-searchbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">{{ closeButtonText }}</ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content>
+  <div id="map" class="map" #map>
+
+    <div class="pac-card" id="pac-card">
+    </div>
+    
+
+  </div>
+  <div class="cancel">
+    <ion-button (click)="onCancel()" expand="block" color="success" size="small">Canncel</ion-button>
+  </div>
+  
+</ion-content>

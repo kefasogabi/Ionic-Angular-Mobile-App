@@ -1,0 +1,96 @@
+
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="container ">
+   
+    <div fxlayout="row" id="header" fxShow fxHide.lg="true" class="title">
+      <h2>Raven App</h2> 
+    </div>
+   
+          <div class="form">
+                <h3>Create your account</h3>
+                <form #f="ngForm" [formGroup]="signUpForm" (ngSubmit) = "onSubmit()">
+                  <ion-row>
+                    <ion-col size="5">
+                      <ion-item>
+                        <ion-select (click)="loadFlags()" formControlName="countryId" placeholder="Country">
+                          <ion-select-option *ngFor="let c of countries" value="{{c.dialingCode}}"> +{{c.dialingCode}} </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.countryId"> 
+                          <div class="error-message" *ngIf="signUpForm.get('countryId').hasError(error.type) && (signUpForm.get('countryId').dirty || signUpForm.get('countryId').touched)">
+                            {{ error.message }}
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ion-col>
+                    <ion-col size="7">
+                      <ion-item [formGroup]="signUpForm">
+                        <ion-icon slot="start" name="call-outline"></ion-icon>
+                        <ion-input type="text" minlength="10" maxlength="15" appIntegerInput (keyup)="noZero($event)"  formControlName="phone" inputmode="tel"  placeholder="Telephone"></ion-input>
+                      </ion-item>
+                      <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.phone"> 
+                          <div class="error-message" *ngIf="signUpForm.get('phone').hasError(error.type) && (signUpForm.get('phone').dirty || signUpForm.get('phone').touched)">
+                            {{ error.message }}
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-item [formGroup]="signUpForm">
+                    <ion-icon slot="start" name="mail-outline"></ion-icon>
+                    <ion-input type="email" formControlName="email" inputmode="email" placeholder="Email" required email></ion-input>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.email">
+                      <div class="error-message" *ngIf="signUpForm.get('email').hasError(error.type) && 
+                (signUpForm.get('email').dirty || signUpForm.get('email').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                   <ion-item [formGroup]="signUpForm">
+                     <ion-icon slot="start" name="key-outline"></ion-icon>
+                     <ion-input type="password" appIntegerInput  formControlName="password" placeholder="Pin (0000)" required minlength="4" maxlength="4"></ion-input>
+                   </ion-item>
+            
+                   <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.password">
+                      <div class="error-message" *ngIf="signUpForm.get('password').hasError(error.type) && (signUpForm.get('password').dirty || signUpForm.get('password').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+            
+                   <ion-item [formGroup]="signUpForm">
+                     <ion-icon slot="start"  name="key-outline"></ion-icon>
+                     <ion-input type="password" appIntegerInput  formControlName="confirmPassword" placeholder=" Confirm Pin (0000)" required minlength="4" name="{{signUpForm.getError('pinNotMatch')}}" maxlength="4"></ion-input>
+                   </ion-item>
+            
+                   <div class="error-messages">
+                    <div class="error-message" *ngIf="signUpForm.getError('pinNotMatch') == true && !signUpForm.get('confirmPassword').errors && (signUpForm.get('confirmPassword').dirty ||signUpForm.get('confirmPassword').touched)">
+                      Sorry, Pins do not match!
+                  </div>
+                    <ng-container *ngFor="let error of error_messages.confirmPassword">
+                      <div class="error-message" *ngIf="signUpForm.get('confirmPassword').hasError(error.type) && (signUpForm.get('confirmPassword').dirty ||signUpForm.get('confirmPassword').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+            
+                   <ion-button type="submit"  color="primary" expand="block" [disabled] = "!signUpForm.valid">
+                     <div class="btn-container">
+                       <span>Sign Up</span>
+                     <ion-icon name="arrow-forward-outline"></ion-icon>
+                     </div>
+                   </ion-button>
+                 </form>
+      <div class="ion-text-center">
+        <span><a [routerLink]="[ '/login']">Have an account? Sign In</a></span>
+      </div>
+          </div>
+  </div>
+</ion-content>
+          

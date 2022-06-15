@@ -1,0 +1,232 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="color: white;">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/select-role">Back</ion-back-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button  *ngIf="service" defaultHref="/addmore-service">Back</ion-back-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="container ">
+          <div class="form">
+                <h3>Create your profile</h3>
+                
+                <form  [formGroup]="addRiderForm" (ngSubmit)="addRider()">
+                  <div formGroupName="RiderDetails" *ngIf="step == 1">
+                    <h2>(Rider or Driver)</h2>
+                    <ion-item >
+                      <ion-icon slot="start" name="person-outline"></ion-icon>
+                      <ion-input type="text" formControlName="surname" inputmode="text" placeholder="Surname" required ></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.surname">
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.surname').hasError(error.type) && 
+                          (addRiderForm.get('RiderDetails.surname').dirty || addRiderForm.get('RiderDetails.surname').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item >
+                      <ion-icon slot="start" name="person-outline"></ion-icon>
+                      <ion-input type="text" formControlName="firstname" inputmode="text" placeholder="First Name" required ></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.firstname">
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.firstname').hasError(error.type) && 
+                          (addRiderForm.get('RiderDetails.firstname').dirty || addRiderForm.get('RiderDetails.firstname').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item >
+                      <ion-icon slot="start" name="person-outline"></ion-icon>
+                      <ion-input type="text" formControlName="othernames" inputmode="text" placeholder="Other Names" required ></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.othernames">
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.othernames').hasError(error.type) && 
+                          (addRiderForm.get('RiderDetails.othernames').dirty || addRiderForm.get('RiderDetails.othernames').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="gender" placeholder="Gender">
+                        <ion-select-option *ngFor="let g of gender" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.gender"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.gender').hasError(error.type) && (addRiderForm.get('RiderDetails.gender').dirty || addRiderForm.get('RiderDetails.gender').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <app-location-picker
+                      [showPreview]="addRiderForm.get('RiderDetails.gpsAddress').value"
+                      (locationPick)="onLocationPicked($event)"
+                    ></app-location-picker>
+                    <p>{{addRiderForm.get('RiderDetails.gpsAddress').value}}</p>
+                    <ion-item>
+                      <ion-icon slot="start" name="locate-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="vehicleId"  placeholder="Vehicle plate number"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.vehicleId"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.vehicleId').hasError(error.type) && (addRiderForm.get('RiderDetails.vehicleId').dirty || addRiderForm.get('RiderDetails.vehicleId').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="vehicleType" placeholder="Vehicle Type">
+                        <ion-select-option *ngFor="let g of vehicleType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.vehicleType"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.vehicleType').hasError(error.type) && (addRiderForm.get('RiderDetails.vehicleType').dirty || addRiderForm.get('RiderDetails.vehicleType').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="vehicleMake"  placeholder="Vehicle Make"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.vehicleMake"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.vehicleMake').hasError(error.type) && (addRiderForm.get('RiderDetails.vehicleMake').dirty || addRiderForm.get('RiderDetails.vehicleMake').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="vehicleModel"  placeholder="Vehicle Model"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.vehicleModel"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('RiderDetails.vehicleModel').hasError(error.type) && (addRiderForm.get('RiderDetails.vehicleModel').dirty || addRiderForm.get('RiderDetails.vehicleModel').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-row >
+                      <ion-col size="">
+                         <ion-button expand="block" color="primary" [disabled]="!addRiderForm.get('RiderDetails').valid"
+                         (click)="next()" size="small">Next</ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                  <div formGroupName="GuarantorDetails" *ngIf="step == 2">
+                    <h2>(Guarantor Information)</h2>
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="fullname"  placeholder="fullname "></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.fullname"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.fullname').hasError(error.type) && (addRiderForm.get('GuarantorDetails.fullname').dirty || addRiderForm.get('GuarantorDetails.fullname').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="number" inputmode="text"  formControlName="telephone"  placeholder="telephone "></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.telephone"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.telephone').hasError(error.type) && (addRiderForm.get('GuarantorDetails.telephone').dirty || addRiderForm.get('GuarantorDetails.telephone').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="occupationId" placeholder="Occupation">
+                        <ion-select-option *ngFor="let g of Occupation" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.occupationId"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.occupationId').hasError(error.type) && (addRiderForm.get('GuarantorDetails.occupationId').dirty || addRiderForm.get('GuarantorDetails.occupationId').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="contactAddress"  placeholder="Contact Address "></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.contactAddress"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.contactAddress').hasError(error.type) && (addRiderForm.get('GuarantorDetails.contactAddress').dirty || addRiderForm.get('GuarantorDetails.contactAddress').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="cityOrTown"  placeholder="cityOrTown "></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.cityOrTown"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.cityOrTown').hasError(error.type) && (addRiderForm.get('GuarantorDetails.cityOrTown').dirty || addRiderForm.get('GuarantorDetails.cityOrTown').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item>
+                      <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                      <ion-input type="text" inputmode="text"  formControlName="stateOrRegion"  placeholder="stateOrRegion "></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.stateOrRegion"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.stateOrRegion').hasError(error.type) && (addRiderForm.get('GuarantorDetails.stateOrRegion').dirty || addRiderForm.get('GuarantorDetails.stateOrRegion').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    <ion-item>
+                      <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                      <ion-select formControlName="relationshipId" placeholder="Relationship">
+                        <ion-select-option *ngFor="let g of Relationship" value="{{g.id}}">{{g.name}} </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.occupationId"> 
+                        <div class="error-message" *ngIf="addRiderForm.get('GuarantorDetails.relationshipId').hasError(error.type) && (addRiderForm.get('GuarantorDetails.relationshipId').dirty || addRiderForm.get('GuarantorDetails.relationshipId').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-grid>
+                      <ion-row >
+                        <ion-col   size="6">
+                          <ion-button expand="block"  (click)="previous()" color="success" size="small">Previous</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                           <ion-button type="submit" expand="block" color="primary" [disabled]="!addRiderForm.get('GuarantorDetails').valid" size="small">Register</ion-button>
+                          </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                 </form>
+        <!-- </ion-card-content>
+          </ion-card> -->
+          </div>
+  </div>
+</ion-content>
+          

@@ -1,0 +1,21 @@
+ion-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none !important;
+
+  ion-label {
+    line-height: 14pt;
+    color: #000000;
+    margin-top: .4rem;
+  }
+
+  img.active {
+    border: #297BFF 3px solid;
+  }
+
+  ion-label.active {
+    color: #297BFF;
+  }
+}

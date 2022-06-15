@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true"  class="ion-padding no-scroll">
+ 
+  <div id="header" >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-slides >
+            <ion-slide>
+              <ion-card (click)="fund()" color="primary" class="navy ion-no-margin">
+                <ion-card-content class="ion-no-padding ion-no-margin">
+                  <ion-icon size="large" class="white" name="cash-outline"></ion-icon>
+                  <br>
+                    <ion-text class="white">
+                      Fund Wallet 
+                    </ion-text>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+         
+        </ion-col>
+        <ion-col style="align-items: right;" size="6">
+          <div style="position: absolute; bottom: 0px; right:0px; margin-right: 10px">
+            <h1 style="margin-bottom: 5px;" > Balance</h1>
+            <p style="margin: 0px; color:white;">NGN {{wallet.balance}}</p>
+          </div>
+       
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+  <div>
+    <div class="">
+      <ion-card >
+        <ion-card-content>
+          <div class="legend" *ngFor="let trans of transactions">
+            <ul>
+              <li><span>{{trans.transDate | date:'mediumDate' }}</span></li>
+            </ul>
+      
+            <ul>
+              <li class="{{trans.credit > 0 ? 'credit' : 'debit' }}"><span>{{trans.credit > 0 ? trans.credit : trans.debit }}</span></li>
+            </ul>
+      
+            <ul>
+              <li><span>{{trans.credit > 0 ? 'in-flow' : 'out-flow'}}</span></li>
+            </ul>
+      
+            <ul>
+              <li><span>{{trans.transStatus }}</span></li>
+            </ul>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+ 
+
+
+</ion-content>
+

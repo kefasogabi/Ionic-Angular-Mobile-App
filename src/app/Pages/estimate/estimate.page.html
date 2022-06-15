@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home">Back</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="container ">
+    <div class="form">
+      <ion-card style="margin:0px">
+        <ion-card-content>
+          <form  [formGroup]="estimateForm" (ngSubmit)="estimate()">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="">
+                    <app-location-picker
+                      [showPreview]="estimateForm.get('pickupImage').value"
+                      (locationPick)="onPickUpPicked($event)"
+                      [title]="'Pick Up'"
+                    ></app-location-picker>
+                    <p>{{estimateForm.get('pickupAddress').value}}</p>
+                </ion-col>
+                </ion-row>
+              </ion-grid>
+             
+              <ion-grid>
+                <ion-row>
+                  <ion-col >
+                    <app-location-picker
+                      [showPreview]="estimateForm.get('dropoffImage').value"
+                      (locationPick)="onDropOffPicked($event)"
+                      [title]="'Drop Off'"
+                    ></app-location-picker>
+                    <p>{{estimateForm.get('dropoffAddress').value}}</p>
+                </ion-col>
+                </ion-row>
+              </ion-grid>
+              
+              <ion-grid>
+                <ion-row >
+                  <ion-col  size="">
+                    <ion-button type="submit" expand="block" color="success" size="small">Estimate</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <app-detail-item *ngFor="let item of estimates" 
+              name="{{item.pickupType}}" 
+              amount="{{item.currency}} {{item.price}}"
+              >
+
+              </app-detail-item>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+</div>
+
+
+</ion-content>

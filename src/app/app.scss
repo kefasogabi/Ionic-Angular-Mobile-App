@@ -1,0 +1,63 @@
+ion-item {
+  --inner-padding-end: 0;
+  --padding-start: 0;
+}
+
+.red {
+    --background: #ffeae9;
+  }
+  
+  .red-icon {
+    color: #ff5238;
+  }
+  
+  .blue {
+    --background: #E3EDFF;
+  }
+  
+  .blue-icon {
+    color: #297bff;
+  }
+  
+  .green {
+    --background: #E3FFEF;
+  }
+  
+  .green-icon {
+    color: #37CF76;
+  }
+  
+  .magenta {
+    --background: #EDE4FF;
+  }
+  
+  .magenta-icon {
+    color: #5F11D7;
+  }
+  
+  .white {
+    color: #ffffff !important;
+  }
+  
+  .navy {
+    --background: #297BFF;
+  }
+  
+  ion-searchbar {
+    --box-shadow: none !important;
+    margin: 0 1rem 1rem !important;
+  }
+
+  ion-searchbar input {
+    border-bottom: 1px solid #223e5c !important;
+  }
+  
+  .ios ion-searchbar input {
+    border-bottom: 1px solid #223e5c !important;
+    --background: #F9FAFB;
+  }
+  
+  .searchbar-input-container,
+  .sc-ion-searchbar-ios {
+    width: auto;
+  }

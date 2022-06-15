@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header" >
+    <img src="assets/avatar.png" />
+  </div>
+
+  <form #f="ngForm" [formGroup]="editInfoForm" (ngSubmit) = "onSubmit()">
+    <ion-item [formGroup]="editInfoForm">
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-input type="tel" formControlName="email" inputmode="email" placeholder="Email" required email></ion-input>
+
+    </ion-item>
+    <div class="error-messages">
+   <!--  <ng-container *ngFor="let error of error_messages.email">
+        <div class="error-message" *ngIf="signUpForm.get('email').hasError(error.type) && 
+  (signUpForm.get('email').dirty || signUpForm.get('email').touched)">
+          {{ error.message }} 
+        </div>
+      </ng-container>-->
+    </div>
+
+    <ion-row>
+      <ion-col size="5">
+        <ion-item>
+          <ion-select (click)="loadFlags()" formControlName="code" placeholder="Code">
+            <ion-select-option *ngFor="let c of countries" value="{{c.dialingCode}}"> +{{c.dialingCode}} </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="error-messages">
+         <!-- <ng-container *ngFor="let error of error_messages.code"> 
+            <div class="error-message" *ngIf="signUpForm.get('code').hasError(error.type) && (signUpForm.get('code').dirty || signUpForm.get('code').touched)">
+              {{ error.message }}
+            </div>
+          </ng-container>-->
+        </div>
+      </ion-col>
+      <ion-col size="7">
+        <ion-item [formGroup]="editInfoForm">
+          <ion-input type="text"  minlength="10" maxlength="15" appIntegerInput formControlName="telephone" inputmode="tel"  placeholder="Phone"></ion-input>
+        </ion-item>
+        <div class="error-messages">
+         <!-- <ng-container *ngFor="let error of error_messages.telephone"> 
+            <div class="error-message" *ngIf="signUpForm.get('telephone').hasError(error.type) && (signUpForm.get('telephone').dirty || signUpForm.get('telephone').touched)">
+              {{ error.message }}
+            </div>
+          </ng-container>-->
+        </div>
+      </ion-col>
+    </ion-row>
+
+     <ion-item [formGroup]="editInfoForm">
+       <ion-icon slot="start" name="key-outline"></ion-icon>
+       <ion-input type="password" appIntegerInput  formControlName="password" placeholder="Pin" required minlength="4" maxlength="4"></ion-input>
+     </ion-item>
+
+     <div class="error-messages">
+    <!-- <ng-container *ngFor="let error of error_messages.password">
+        <div class="error-message" *ngIf="signUpForm.get('password').hasError(error.type) && (signUpForm.get('password').dirty || signUpForm.get('password').touched)">
+          {{ error.message }}
+        </div>
+      </ng-container>--> 
+    </div>
+
+     <ion-item [formGroup]="editInfoForm">
+       <ion-icon slot="start"  name="key-outline"></ion-icon>
+       <ion-input type="password" appIntegerInput  formControlName="confirmPassword" pattern="[0-9]{4}" placeholder=" Confirm Pin" required minlength="4" name="{{editInfoForm.getError('pinNotMatch')}}" maxlength="4"></ion-input>
+     </ion-item>
+
+     <div class="error-messages">
+    <!-- <div class="error-message" *ngIf="signUpForm.getError('pinNotMatch') == true && !signUpForm.get('confirmPassword').errors && (signUpForm.get('confirmPassword').dirty ||signUpForm.get('confirmPassword').touched)">
+        Sorry, Pins do not match!
+    </div>
+      <ng-container *ngFor="let error of error_messages.confirmPassword">
+        <div class="error-message" *ngIf="signUpForm.get('confirmPassword').hasError(error.type) && (signUpForm.get('confirmPassword').dirty ||signUpForm.get('confirmPassword').touched)">
+          {{ error.message }}
+        </div>
+      </ng-container>--> 
+    </div>
+
+     <ion-button type="submit"  color="primary" expand="block" [disabled] = "!editInfoForm.valid">
+       <div class="btn-container">
+         <span>Sign Up</span>
+       <ion-icon name="arrow-forward-outline"></ion-icon>
+       </div>
+     </ion-button>
+   </form>
+</ion-content>

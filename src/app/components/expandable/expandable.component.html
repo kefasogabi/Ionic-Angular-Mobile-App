@@ -1,0 +1,63 @@
+
+          <div>
+            <ion-card   class="transaction-container">
+              <ion-grid (click)="toggleAccordion()">
+                <ion-row class="transaction-row1">
+                  <ion-col size="4">
+                    <ion-img [src]="image"   ></ion-img>
+                  </ion-col>
+                  <!-- <ion-col size="4" class="transaction-row1-col1">
+                    <div>
+                      <h5>Amount: </h5>
+                      <p>5,000</p>
+                    </div>
+                    </ion-col> -->
+                  <ion-col size="8" class="transaction-row1-col2" >
+                    <h1 style="margin-top: 0px;">Description</h1> 
+                    <p>{{description}}
+                  </ion-col>
+                </ion-row >
+              </ion-grid>
+            <div [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
+              <ion-card-content  class="ion-no-padding wrapper">
+                  <ion-grid>
+                    <ion-row class="transaction-row2">
+                      <ion-col class="transaction-row2-col1">
+                        <h1>Status</h1> 
+                        <p>{{status}}
+                      </ion-col>
+                      <ion-col class="transaction-row2-col2">
+                        <h1>Price</h1> 
+                        <p>{{ price }}</p>
+                      </ion-col>
+                      <ion-col *ngIf="status == 'IN_TRANSIT'"> 
+                        <ion-icon (click)="track(rideId)" style="font-size: 50px; color:#002366;" name="eye-outline"></ion-icon>
+                        <!-- <a (click)="track(rideId)">Click here for tracking</a> -->
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-grid>
+                    <ion-row class="transaction-row2">
+                      <ion-col class="transaction-row2-col1">
+                        <h1>Rider's name</h1> 
+                        <p> {{ riderName }}</p>
+                      </ion-col>
+                      <ion-col class="transaction-row2-col2">
+                        <h1>Telephone</h1> 
+                        <p>{{telephone}}</p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size=""> 
+                        <ion-button (click)="routerLink(router, rideId)" expand="block" color="secondary" size="small">Click here for more details</ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+              </ion-card-content>
+            </div>
+            </ion-card>
+          </div>
+        
+    

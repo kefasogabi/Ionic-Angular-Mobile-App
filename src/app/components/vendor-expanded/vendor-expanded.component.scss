@@ -1,0 +1,91 @@
+.transaction-container{
+    flex-direction: row;
+    background-color: white;
+    margin: 0.4rem;
+    padding: 0;
+  
+    h1{
+       font-size: 4vw;
+       font-weight: 600;
+    }
+  
+    p{
+      font-size: 3.5vw;
+    }
+  
+    .transaction-row1{
+      width: 100%;
+      height: fit-content;
+  
+      ion-img{
+       
+      }
+  
+      h2{
+          margin-top: 5px !important;
+          margin-bottom: 5px !important;
+      }
+  
+      p{
+        margin-top: 5px !important;
+          margin-bottom: 5px !important;
+      }
+    }
+  
+    .transaction-row2{
+      width: 100%;
+      height: fit-content;
+    }
+  
+    ion-button{
+      --padding-start: 5vw;
+      --padding-end: 5vw;
+      --padding-top: 1vh;
+      --padding-bottom: 1vh;
+      --ripple-color: blue;
+      width: 100%;
+      height: 6vh;
+      font-size: 3vw;
+    }
+    
+  }
+  
+  .wrapper {
+    transition: 0.2s linear;
+  } 
+  
+  .transaction-head-title{
+    display: flex;
+    width: 100%;
+  
+    .t-h-t-1{
+      width: 60%;
+    }
+  
+    .t-h-t-2{
+      width: 30%;
+      padding: 10px;
+    }
+  
+    .Home-Header{
+      font-size: 4.5vw;
+      color: #297BFF;
+      font-weight: 600;
+    }
+    
+    .Home-link{
+      font-size: 3.5vw;
+      color: #0c244b;
+      font-weight: 400;
+      text-align: right;
+    }
+  }
+  
+  
+  .active {
+    display: block
+  }
+  
+  .inactive {
+    display: none;
+  }

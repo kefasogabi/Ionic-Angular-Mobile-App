@@ -1,0 +1,81 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar style="color: white;">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/select-role">Back</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="container ">
+          <div class="form">
+            <div fxlayout="row" id="header" fxShow fxHide.lg="true" class="title">
+              <h2>Raven App</h2> 
+            </div>
+
+                <h3>Create your profile</h3>
+                <h2>(Sender)</h2>
+                <form #f="ngForm" [formGroup]="addVendorForm" (ngSubmit)="addVendor()">
+                  <ion-item [formGroup]="addVendorForm">
+                    <ion-icon slot="start" name="person-outline"></ion-icon>
+                    <ion-input type="text" formControlName="surname" inputmode="text" placeholder="Surname" required ></ion-input>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.surname">
+                      <div class="error-message" *ngIf="addVendorForm.get('surname').hasError(error.type) && 
+                        (addVendorForm.get('surname').dirty || addVendorForm.get('surname').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <ion-item [formGroup]="addVendorForm">
+                    <ion-icon slot="start" name="person-outline"></ion-icon>
+                    <ion-input type="text" formControlName="firstname" inputmode="text" placeholder="First Name" required ></ion-input>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.firstname">
+                      <div class="error-message" *ngIf="addVendorForm.get('firstname').hasError(error.type) && 
+                        (addVendorForm.get('firstname').dirty || addVendorForm.get('firstname').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <ion-item [formGroup]="addVendorForm">
+                    <ion-icon slot="start" name="person-outline"></ion-icon>
+                    <ion-input type="text" formControlName="othernames" inputmode="text" placeholder="Other Names" required ></ion-input>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.surname">
+                      <div class="error-message" *ngIf="addVendorForm.get('othernames').hasError(error.type) && 
+                        (addVendorForm.get('othernames').dirty || addVendorForm.get('othernames').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <ion-item>
+                    <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                    <ion-select formControlName="gender" placeholder="Gender">
+                      <ion-select-option *ngFor="let g of gender" value="{{g.id}}">{{g.name}} </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.gender"> 
+                      <div class="error-message" *ngIf="addVendorForm.get('gender').hasError(error.type) && (addVendorForm.get('gender').dirty || addVendorForm.get('gender').touched)">
+                        {{ error.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                   <ion-button type="submit"  color="primary" expand="block" [disabled] = "!addVendorForm.valid">
+                     <div class="btn-container">
+                       <span>Register</span>
+                     <ion-icon name="arrow-forward-outline"></ion-icon>
+                     </div>
+                   </ion-button>
+                 </form>
+
+          </div>
+  </div>
+</ion-content>
+          

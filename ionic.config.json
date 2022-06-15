@@ -1,0 +1,7 @@
+{
+  "name": "RoadSter Rider",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

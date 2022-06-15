@@ -1,0 +1,17 @@
+
+<ion-content>
+  <ion-item class="close-fake" lines="none" text-center>
+    <ion-button (click)="close()" fill="clear" color="light" >
+      <ion-icon name="arrow-back-outline" slot="start" ></ion-icon>
+      Back
+    </ion-button>
+  </ion-item>
+
+  <ion-slides [options]="sliderOpts" >
+    <ion-slide>
+      <div class="swiper-zoom-container" >
+      <img src="{{img}}" />
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

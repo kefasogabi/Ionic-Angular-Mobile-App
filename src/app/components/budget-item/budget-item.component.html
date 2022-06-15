@@ -1,0 +1,31 @@
+<ion-card class="ion-padding">
+  <div class="item-container" (click)="show = !show">
+    <ul class="left">
+      <li>
+        <span>
+          {{ name }}
+        </span>
+      </li>
+      <li><p>{{ current | currency }}</p></li>
+    </ul>
+    <ul class="right">
+      <li>
+        <span>
+          {{ date | date }}
+        </span>
+      </li>
+      <li><p>{{ total | currency }}</p></li>
+    </ul>
+  </div>
+  <ion-progress-bar color="primary" [value]="((100*current)/total)/100"></ion-progress-bar>
+  <ion-card-content *ngIf="show" class="ion-no-padding">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <ion-icon name="information-circle-outline" class="blue-icon"></ion-icon>
+      </ion-avatar>
+      <p>
+      Your budget is at {{ (100*current)/total | number:'1.0-0'}} %. Your have 50 days to complete it.
+      </p>
+    </ion-item>  
+  </ion-card-content>
+</ion-card>

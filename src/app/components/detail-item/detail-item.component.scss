@@ -1,0 +1,18 @@
+ion-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    background: #E3EDFF;
+  
+    ion-icon {
+      font-size: 14pt;
+    }
+  }
+
+  ion-label h2 {
+    font-weight: 500;
+  }
+  
+  .amount {
+    text-align: right;
+  }

@@ -1,0 +1,681 @@
+
+
+
+<ion-content [fullscreen]="true"  class="ion-padding ">
+ 
+  <div id="header" >
+    <div class="imgContainer">
+      <ion-avatar slot="">
+      <img  src="{{ userProfile.image ? 'data:image/jpeg;base64,' + userProfile.image : 'assets/avatar.png' }}" />
+      <div (click)="getImage()"  class="centered">Change photo</div>
+      </ion-avatar>
+     
+    </div>
+    <h1>
+      {{userProfile.fullname}}
+    </h1>
+    <ion-text  >My ID {{ userProfile.userId }}</ion-text>
+  </div>
+
+
+  <div *ngIf="clientServices == true">
+    <div class="gradient-background">
+      <ion-slides  [options]="slideOptsThumbs">
+        <ion-slide >
+          <ion-card   class="services ion-no-margin">
+            <ion-card-content color="primary" class="ion-no-margin">
+                <ion-text  class="">
+                   7
+                </ion-text>
+            </ion-card-content>
+            <p  class=""> Sent </p>
+          </ion-card>
+        </ion-slide>
+        <ion-slide >
+          <ion-card  class="services ion-no-margin">
+            <ion-card-content color="primary" class="ion-no-margin">
+                <ion-text  class="">
+                  4 
+                </ion-text>
+            </ion-card-content>
+            <p  class=""> Received </p>
+          </ion-card>
+        </ion-slide>
+       
+        <ion-slide >
+          <ion-card  class="services ion-no-margin">
+            <ion-card-content color="primary" class="ion-no-margin">
+                <ion-text  class="">
+                   NGN0.00 
+                </ion-text>
+            </ion-card-content>
+            <p  class=""> Wallet </p>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+
+
+      <ion-card >
+        <ion-card-content>
+          <ion-list>
+            <ion-item (click)="toggleProfile()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/user-icon.svg">
+                </ng-container>
+              </ion-avatar>
+              <ion-label>
+                <h2>Profile</h2>
+                <p>Edit your personal information</p>
+              </ion-label>
+              <ion-icon name="{{this.showProfile ? 'chevron-down-outline' : 'chevron-forward-outline'}}"></ion-icon>
+            </ion-item>
+            <div class="{{this.showProfile ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="profileForm" (ngSubmit)="profile()">
+                <ion-item [formGroup]="profileForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="surname" inputmode="text" placeholder="Surname" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of error_messages.surname">
+                    <div class="error-message" *ngIf="profileForm.get('surname').hasError(error.type) && 
+                      (profileForm.get('surname').dirty || profileForm.get('surname').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="profileForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="firstname" inputmode="text" placeholder="First Name" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of error_messages.firstname">
+                    <div class="error-message" *ngIf="profileForm.get('firstname').hasError(error.type) && 
+                      (profileForm.get('firstname').dirty || profileForm.get('firstname').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="profileForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="othernames" inputmode="text" placeholder="Other Names" required ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="gender" placeholder="Gender">
+                    <ion-select-option *ngFor="let g of gender" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of error_messages.gender"> 
+                    <div class="error-message" *ngIf="profileForm.get('gender').hasError(error.type) && (profileForm.get('gender').dirty || profileForm.get('gender').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!profileForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+            <ion-item (click)="toggleBank()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/bank-icon.svg">
+                </ng-container>
+              </ion-avatar>
+                <ion-label>
+                  <h2>Bank Account</h2>
+                  <p>Manage your bank account</p>
+                </ion-label>
+                <ion-icon name="{{this.showBank ? 'chevron-down-outline' : 'chevron-forward-outline'}}"></ion-icon>
+            </ion-item>
+            <div class="{{this.showBank ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="bankForm" (ngSubmit)="bankAccount()">
+                <ion-input type="hidden" formControlName="userId"></ion-input>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="accountNumber" appIntegerInput inputmode="tel" placeholder="Account number" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.accountNumber">
+                    <div class="error-message" *ngIf="bankForm.get('accountNumber').hasError(error.type) && 
+                      (bankForm.get('accountNumber').dirty || bankForm.get('accountNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="accountName" inputmode="text" placeholder="Account name" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.accountName">
+                    <div class="error-message" *ngIf="bankForm.get('accountName').hasError(error.type) && 
+                      (bankForm.get('accountName').dirty || bankForm.get('accountName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="bankName" placeholder="Select Bank">
+                    <ion-select-option *ngFor="let g of banks" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.bankName"> 
+                    <div class="error-message" *ngIf="bankForm.get('bankName').hasError(error.type) && (bankForm.get('bankName').dirty || bankForm.get('bankName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!bankForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   <!-- <ion-icon name="arrow-forward-outline"></ion-icon> -->
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+            <ion-item (click)="toggleCard()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/card-icon.svg">
+                </ng-container>
+              </ion-avatar>
+              <ion-label>
+                <h2>Card</h2>
+                <p>Manage your credit card</p>
+              </ion-label>
+              <ion-icon name="{{this.showCard ? 'chevron-down-outline' : 'chevron-forward-outline'}}"></ion-icon>
+            </ion-item>
+            <div class="{{this.showCard ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="cardForm" (ngSubmit)="cards()">
+                <ion-input type="hidden" formControlName="userId"></ion-input>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="number" formControlName="cardNumber" appIntegerInput inputmode="tel" placeholder="CardNumber" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardNumber">
+                    <div class="error-message" *ngIf="cardForm.get('cardNumber').hasError(error.type) && 
+                      (cardForm.get('cardNumber').dirty || cardForm.get('cardNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-select formControlName="cardType" placeholder="Select CardType">
+                    <ion-select-option *ngFor="let g of cardType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardType">
+                    <div class="error-message" *ngIf="cardForm.get('cardType').hasError(error.type) && 
+                      (cardForm.get('cardType').dirty || cardForm.get('cardType').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="text" formControlName="cardName" inputmode="text" placeholder="CardName" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardName"> 
+                    <div class="error-message" *ngIf="cardForm.get('cardName').hasError(error.type) && (cardForm.get('cardName').dirty || cardForm.get('cardName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="expiryMonth" appIntegerInput inputmode="tel" placeholder="ExpiryMonth" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.expiryMonth"> 
+                    <div class="error-message" *ngIf="cardForm.get('expiryMonth').hasError(error.type) && (cardForm.get('expiryMonth').dirty || cardForm.get('expiryMonth').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="expiryYear" appIntegerInput inputmode="tel" placeholder="ExpiryYear" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.expiryYear"> 
+                    <div class="error-message" *ngIf="cardForm.get('expiryYear').hasError(error.type) && (cardForm.get('expiryYear').dirty || cardForm.get('expiryYear').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="securityNumber" appIntegerInput inputmode="tel" placeholder="SecurityNumber" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.securityNumber"> 
+                    <div class="error-message" *ngIf="cardForm.get('securityNumber').hasError(error.type) && (cardForm.get('securityNumber').dirty || cardForm.get('securityNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!cardForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+          </ion-list>
+          <ion-button expand="block" color="light" (click)="logout()">
+            <ion-icon slot="start" style="color: red; margin-right: 5px; width: 25px; height: 25px;" name="log-out-outline"></ion-icon>
+            <div class="btn-container">
+              <span style="color: red; margin-right: 5px; width: 25px; height: 25px;">Log Out</span>
+            </div>
+        </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="riderServices == true">
+    <div class="gradient-background">
+      <ion-card >
+        <ion-card-content>
+          <ion-list>
+            <ion-item (click)="toggleRiderProfile()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/user-icon.svg">
+                </ng-container>
+              </ion-avatar>
+              <ion-label>
+                <h2>Profile</h2>
+                <p>Edit your personal information</p>
+              </ion-label>
+              <!-- <ion-icon name="chevron-forward-outline"></ion-icon> -->
+            </ion-item>
+            <div class="{{this.showRiderProfile ? 'active' : 'inactive'}}" >
+              <form #f="ngForm" [formGroup]="riderProfile" (ngSubmit)="RiderProfile()">
+                <ion-item [formGroup]="riderProfile">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="surname" inputmode="text" placeholder="Surname" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.surname">
+                    <div class="error-message" *ngIf="riderProfile.get('surname').hasError(error.type) && 
+                      (riderProfile.get('surname').dirty || riderProfile.get('surname').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="riderProfile">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="firstname" inputmode="text" placeholder="First Name" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.firstname">
+                    <div class="error-message" *ngIf="riderProfile.get('firstname').hasError(error.type) && 
+                      (riderProfile.get('firstname').dirty || riderProfile.get('firstname').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="riderProfile">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="othernames" inputmode="text" placeholder="Other Names" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.othernames">
+                    <div class="error-message" *ngIf="riderProfile.get('othernames').hasError(error.type) && 
+                      (riderProfile.get('othernames').dirty || riderProfile.get('othernames').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="riderProfile">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="gender" placeholder="Gender">
+                    <ion-select-option *ngFor="let g of gender" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.gender"> 
+                    <div class="error-message" *ngIf="riderProfile.get('gender').hasError(error.type) && (riderProfile.get('gender').dirty || riderProfile.get('gender').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <app-location-picker
+                  [showPreview]="riderProfile.get('gpsAddress').value"
+                  (locationPick)="onLocationPicked($event)"
+                ></app-location-picker>
+                <p>{{riderProfile.get('gpsAddress').value}}</p>
+                <ion-item [formGroup]="riderProfile">
+                  <ion-icon slot="start" name="locate-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="vehicleId"  placeholder="Vehicle plate number"></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.vehicleId"> 
+                    <div class="error-message" *ngIf="riderProfile.get('vehicleId').hasError(error.type) && (riderProfile.get('vehicleId').dirty || riderProfile.get('vehicleId').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="vehicleType" placeholder="Vehicle Type">
+                    <ion-select-option *ngFor="let g of vehicleType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.vehicleType"> 
+                    <div class="error-message" *ngIf="riderProfile.get('vehicleType').hasError(error.type) && (riderProfile.get('vehicleType').dirty || riderProfile.get('vehicleType').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="vehicleMake"  placeholder="Vehicle Make"></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.vehicleMake"> 
+                    <div class="error-message" *ngIf="riderProfile.get('vehicleMake').hasError(error.type) && (riderProfile.get('vehicleMake').dirty || riderProfile.get('vehicleMake').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="vehicleModel"  placeholder="Vehicle Model"></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of riderProfile_messages.vehicleModel"> 
+                    <div class="error-message" *ngIf="riderProfile.get('vehicleModel').hasError(error.type) && (riderProfile.get('vehicleModel').dirty || riderProfile.get('vehicleModel').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="primary" expand="block" [disabled] = "!riderProfile.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+            <ion-item (click)="toggleBank()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/bank-icon.svg">
+                </ng-container>
+              </ion-avatar>
+                <ion-label>
+                  <h2>Bank Account</h2>
+                  <p>Manage your bank account</p>
+                </ion-label>
+            </ion-item>
+            <div class="{{this.showBank ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="bankForm" (ngSubmit)="bankAccount()">
+                <ion-input type="hidden" formControlName="userId"></ion-input>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="accountNumber" appIntegerInput inputmode="tel" placeholder="Account number" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.accountNumber">
+                    <div class="error-message" *ngIf="bankForm.get('accountNumber').hasError(error.type) && 
+                      (bankForm.get('accountNumber').dirty || bankForm.get('accountNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="text" formControlName="accountName" inputmode="text" placeholder="Account name" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.accountName">
+                    <div class="error-message" *ngIf="bankForm.get('accountName').hasError(error.type) && 
+                      (bankForm.get('accountName').dirty || bankForm.get('accountName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="bankForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="bankName" placeholder="Select Bank">
+                    <ion-select-option *ngFor="let g of banks" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of bank_messages.bankName"> 
+                    <div class="error-message" *ngIf="bankForm.get('bankName').hasError(error.type) && (bankForm.get('bankName').dirty || bankForm.get('bankName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!bankForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   <!-- <ion-icon name="arrow-forward-outline"></ion-icon> -->
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+            <ion-item (click)="toggleCard()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/card-icon.svg">
+                </ng-container>
+              </ion-avatar>
+              <ion-label>
+                <h2>Card</h2>
+                <p>Manage your credit card</p>
+              </ion-label>
+            </ion-item>
+            <div class="{{this.showCard ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="cardForm" (ngSubmit)="cards()">
+                <ion-input type="hidden" formControlName="userId"></ion-input>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input type="number" formControlName="cardNumber" appIntegerInput inputmode="tel" placeholder="CardNumber" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardNumber">
+                    <div class="error-message" *ngIf="cardForm.get('cardNumber').hasError(error.type) && 
+                      (cardForm.get('cardNumber').dirty || cardForm.get('cardNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-select formControlName="cardType" placeholder="Select CardType">
+                    <ion-select-option *ngFor="let g of cardType" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardType">
+                    <div class="error-message" *ngIf="cardForm.get('cardType').hasError(error.type) && 
+                      (cardForm.get('cardType').dirty || cardForm.get('cardType').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="text" formControlName="cardName" inputmode="text" placeholder="CardName" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.cardName"> 
+                    <div class="error-message" *ngIf="cardForm.get('cardName').hasError(error.type) && (cardForm.get('cardName').dirty || cardForm.get('cardName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="expiryMonth" appIntegerInput inputmode="tel" placeholder="ExpiryMonth" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.expiryMonth"> 
+                    <div class="error-message" *ngIf="cardForm.get('expiryMonth').hasError(error.type) && (cardForm.get('expiryMonth').dirty || cardForm.get('expiryMonth').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="expiryYear" appIntegerInput inputmode="tel" placeholder="ExpiryYear" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.expiryYear"> 
+                    <div class="error-message" *ngIf="cardForm.get('expiryYear').hasError(error.type) && (cardForm.get('expiryYear').dirty || cardForm.get('expiryYear').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item [formGroup]="cardForm">
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-input type="number" formControlName="securityNumber" appIntegerInput inputmode="tel" placeholder="SecurityNumber" required ></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of card_messages.securityNumber"> 
+                    <div class="error-message" *ngIf="cardForm.get('securityNumber').hasError(error.type) && (cardForm.get('securityNumber').dirty || cardForm.get('securityNumber').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!cardForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+            <ion-item (click)="toggleGuarantor()">
+              <ion-avatar slot="start">
+                <ng-container >
+                  <img src="assets/icon/card-icon.svg">
+                </ng-container>
+              </ion-avatar>
+              <ion-label>
+                <h2>Guarantor</h2>
+                <p>Your guarantor information</p>
+              </ion-label>
+            </ion-item>
+            <div class="{{this.showGuarantor ? 'active' : 'inactive'}}" >
+              <form  [formGroup]="guarantorForm" (ngSubmit)="guarantor()">
+                <ion-input type="hidden" formControlName="userId"></ion-input>
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="fullname"  placeholder="fullname "></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.fullname"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('fullname').hasError(error.type) && (guarantorForm.get('fullname').dirty || guarantorForm.get('fullname').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="number" inputmode="text"  formControlName="telephone"  placeholder="telephone "></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.telephone"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('telephone').hasError(error.type) && (guarantorForm.get('telephone').dirty || guarantorForm.get('telephone').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="occupationId" placeholder="Occupation">
+                    <ion-select-option *ngFor="let g of Occupation" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.occupationId"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('occupationId').hasError(error.type) && (guarantorForm.get('occupationId').dirty || guarantorForm.get('occupationId').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="contactAddress"  placeholder="Contact Address "></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.contactAddress"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('contactAddress').hasError(error.type) && (guarantorForm.get('contactAddress').dirty || guarantorForm.get('contactAddress').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="cityOrTown"  placeholder="cityOrTown "></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.cityOrTown"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('cityOrTown').hasError(error.type) && (guarantorForm.get('cityOrTown').dirty || guarantorForm.get('cityOrTown').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                  <ion-input type="text" inputmode="text"  formControlName="stateOrRegion"  placeholder="stateOrRegion "></ion-input>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.stateOrRegion"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('stateOrRegion').hasError(error.type) && (guarantorForm.get('stateOrRegion').dirty || guarantorForm.get('stateOrRegion').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-icon slot="start" name="transgender-outline"></ion-icon>
+                  <ion-select formControlName="relationshipId" placeholder="Relationship">
+                    <ion-select-option *ngFor="let g of Relationship" value="{{g.id}}">{{g.name}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of guarantor_messages.occupationId"> 
+                    <div class="error-message" *ngIf="guarantorForm.get('relationshipId').hasError(error.type) && (guarantorForm.get('relationshipId').dirty || guarantorForm.get('relationshipId').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
+
+                 <ion-button type="submit"  color="success" expand="block" [disabled] = "!guarantorForm.valid">
+                   <div class="btn-container">
+                     <span>Save</span>
+                   </div>
+                 </ion-button>
+               </form>
+            </div>
+          </ion-list>
+          <ion-button expand="block" color="light" (click)="logout()">
+            <ion-icon slot="start" style="color: red; margin-right: 5px; width: 25px; height: 25px;" name="log-out-outline"></ion-icon>
+            <div class="btn-container">
+              <span style="color: red; margin-right: 5px; width: 25px; height: 25px;">Log Out</span>
+            </div>
+        </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    
+  </div>
+
+</ion-content>

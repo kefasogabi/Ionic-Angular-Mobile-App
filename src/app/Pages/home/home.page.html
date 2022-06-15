@@ -1,0 +1,180 @@
+
+
+
+<ion-content [fullscreen]="true" class="content">
+
+   <div  id="header" > 
+      <div class="transbox">
+      <ion-header class="ion-no-border head">
+
+        <ion-toolbar side="start">
+              <ion-avatar style="margin-right:7px;" slot="start">
+                <img class="img-icon" src="{{ user.image ? 'data:image/jpeg;base64,' + user.image : 'assets/avatar.png' }}">
+              </ion-avatar>
+              <ion-text style="color: white;" >My ID {{ user.userId }}</ion-text>
+              <h1 style="color: white;">
+              Hello {{user.fullname}}
+              </h1>
+      
+          <ion-buttons slot="end">
+            <ion-button (click)="goToNotifications()">
+              <ion-icon style="color: white;" slot="icon-only" name="notifications-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <div class="description-home">
+        <div class="description-home-text">
+          <h1>Deliver! Receive! Dispatch!</h1>
+          <p>The fastest way to send, receive and dispatch goods. You don't have to wait!</p></div>
+        <img style="margin: 0px;" src="assets/deliver.svg"/>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="ion-padding">
+      
+      <ion-row *ngIf="!riderServices == true">
+        <ion-col class="t-h-t-1" size=""><h1 class="Home-Header">Recommended for you.</h1></ion-col>  
+      </ion-row>
+      <ion-row *ngIf="!riderServices == true">
+       <ion-col class="Services-Cards">
+        <ion-slides  [options]="slideOptsThumbs">
+        <ion-slide *ngIf="vendorServices == true" (click)="book()">
+          <ion-card  class="services ion-no-margin">
+            <ion-card-content class=" ion-no-margin">
+              <ion-icon color="primary" class="" name="gift"></ion-icon>
+              <br>
+                <ion-text color="primary" class="">
+                   Dispatch
+                </ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+        <ion-slide *ngIf="vendorServices == true" (click)="estimate()" >
+          <ion-card  class="services ion-no-margin">
+            <ion-card-content class=" ion-no-margin">
+              <ion-icon color="primary" class="" name="stats-chart"></ion-icon>
+              <br>
+                <ion-text color="primary" class="">
+                  Estimate 
+                </ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+       
+        <ion-slide *ngIf="vendorServices == true" (click)="openPage()">
+          <ion-card  class="services ion-no-margin">
+            <ion-card-content class=" ion-no-margin">
+              <ion-icon color="primary" class="" name="help-circle"></ion-icon>
+              <br>
+                <ion-text color="primary" class="">
+                   Help 
+                </ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+      
+       </ion-col>
+      </ion-row>
+      <ion-row>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col *ngIf="!riderServices == true" class="t-h-t-1" size="10">
+          <h1 style="margin-bottom:0px;" class="Home-Header">Current Transaction (s)</h1>
+          <ion-text style="font-size: 12px;" >Click on a package to view more details</ion-text>
+        </ion-col>  
+        <ion-col *ngIf="riderServices == true" class="t-h-t-1" size="10"><h1 class="Home-Header">My Rides</h1></ion-col>  
+        <ion-col class="t-h-t-2" size="2">
+          <h1 (click)="doRefresh()" class="Home-Header"><ion-icon color="primary" slot="end" size="large" name="refresh-circle"></ion-icon></h1>
+        </ion-col>
+      </ion-row>
+  
+      <div *ngIf="clientServices == true" > 
+        <div >
+          <ion-row class="transaction-head-title">
+            <ion-col class="t-h-t-1">
+            </ion-col> 
+            </ion-row>
+            <ion-skeleton-text *ngIf="isLoading == true"  animated style="width: 100%; height:80px"></ion-skeleton-text>
+           <div *ngIf="isLoading == false" >
+            <client-expandable *ngFor="let item of client" 
+            riderName="{{ item.riderName }}" 
+            telephone="{{item.telephone}}"
+            price="{{ item.price }}"
+            description="{{ item.briefDescription }}" 
+            status="{{ item.rideStatus }}" 
+            router="/tabs/booking-details"
+            rideId={{item.rideId}}
+            image="{{item.image ? 'data:image/jpeg;base64,' + item.image : 'assets/noImage.jpg' }}"  >
+          </client-expandable>
+           </div>
+          <div *ngIf="isLoading == false">
+            <p *ngIf="client.length <= 0" style="margin-top: 0px; align-items: center; text-align: center;">No packages received</p>
+          </div>
+          </div>
+      </div> 
+  
+      <ion-item-divider *ngIf="clientServices == true" style="--background:#3a327f">
+      </ion-item-divider>
+  
+      <div *ngIf="vendorServices == true">
+        <div >
+          <ion-row class="transaction-head-title">
+            <ion-col class="t-h-t-1">
+             
+            </ion-col> 
+            </ion-row>
+            <ion-skeleton-text *ngIf="isLoading == true" animated style="width: 100%; height:80px"></ion-skeleton-text>
+            <div *ngIf="isLoading == false" >
+            <client-expandable *ngFor="let item of vendor" 
+            riderName="{{ item.riderName }}" 
+            telephone="{{item.telephone}}"
+            price="{{ item.price }}"
+            description="{{ item.briefDescription }}" 
+            status="{{ item.rideStatus }}" 
+            router="/tabs/booking-details"
+            rideId={{item.rideId}}
+            image="{{item.image ? 'data:image/jpeg;base64,' + item.image : 'assets/noImage.jpg' }}" >
+            </client-expandable>
+          </div>
+            <div *ngIf="isLoading == false">
+            <p *ngIf="vendor.length <= 0" style="margin-top: 0px; align-items: center; text-align: center;">No packages sent</p>
+            </div>
+          </div>
+      </div>
+  
+      <div *ngIf="riderServices == true">
+        <div >
+          <ion-skeleton-text *ngIf="isLoading == true" animated style="width: 100%; height:80px"></ion-skeleton-text>
+          <ion-skeleton-text *ngIf="isLoading == true" animated style="width: 100%; height:80px"></ion-skeleton-text>
+          <ion-skeleton-text *ngIf="isLoading == true" animated style="width: 100%; height:80px"></ion-skeleton-text>
+          
+          <div *ngIf="isLoading == false" >
+          <app-rider-expanded *ngFor="let item of rider" 
+            dropOff="{{ item.dropoffAddress }}" 
+            pickUp="{{item.pickupAddress}}"
+            description="{{ item.briefDescription }}" 
+            price="{{ item.price }}"
+            status="{{ item.rideStatus }}" 
+            router="/tabs/booking-details"
+            rideId={{item.rideId}}
+            image="{{item.image ? 'data:image/jpeg;base64,' + item.image : 'assets/noImage.jpg' }}">
+            </app-rider-expanded>
+          </div>
+            <div *ngIf="isLoading == false">
+              <p *ngIf="rider.length <= 0" style="margin-top: 0px; align-items: center; text-align: center;">No Rides</p>
+            </div>
+          </div>
+      </div>
+     
+    </div>
+    
+    
+
+  <!-- </ion-grid> -->
+</ion-content>
